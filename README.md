@@ -8,6 +8,6 @@ A simple R package for pricing European options using:
 
 - Option Greeks
 
-\
+
 
 Refer to vignette for usage demonstration and a practical example.
