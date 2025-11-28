@@ -1,0 +1,119 @@
+---
+title: "Option Pricing with `optionsLibrary`"
+author: "Tom Smit"
+date: "`r Sys.Date()`"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Option Pricing Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+\
+
+# Introduction
+
+This vignette explains how to use the `optionsLibrary` package to price European options and compute Greeks, including a simple application.\
+
+The main syntax is defined as follows:
+
+- Spot price $S_0$ = S
+
+- Strike price $K$ = K
+
+- Risk-free rate $r$ = r
+
+- Dividend yield $\delta$ = q
+
+- Volatility $\sigma$ = sigma
+
+- Time to maturity $T$ = T
+
+\
+
+Now, load `optionsLibrary`.
+
+```{r}
+library(optionsLibrary)
+```
+
+\
+
+# Black-Scholes pricing
+Computing a European call:
+```{r}
+S <- 100
+K <- 100
+r <- 0.03
+q <- 0
+sigma <- 0.2
+T <- 0.5
+```
+
+```{r}
+call_price <- bs_price(S, K, r, q, sigma, T, 'call')
+call_price
+```
+\
+
+Same for a European put:
+```{r}
+put_price <- bs_price(S, K, r, q, sigma, T, 'put')
+put_price
+```
+
+\
+
+# Option Greeks
+Greeks are easily computed in a similar fashion:
+```{r}
+call_greeks <- bs_greeks(S, K, r, q, sigma, T, 'call')
+call_greeks
+```
+
+```{r}
+put_greeks <- bs_greeks(S, K, r, q, sigma, T, 'put')
+put_greeks
+```
+\
+Output is in list form, allowing to isolate a specific greek:
+```{r}
+call_greeks$Delta
+```
+
+\
+
+# Binomial tree pricing
+
+```{r}
+n <- 100
+```
+
+```{r}
+call_binomial <- binomial_price(S, K, r, q, sigma, T, n, 'call')
+call_binomial
+```
+
+```{r}
+put_binomial <- binomial_price(S, K, r, q, sigma, T, n, 'put')
+put_binomial
+```
+\
+
+# Binomial convergence to Black-Scholes
+An easy application Using `optionsLibrary` is to plot the convergence of the binomial price to the Black-Scholes price:
+```{r}
+n_steps <- seq(5, 500, by = 5)
+binomial_prices <- numeric(length(n_steps))
+blackscholes_price <- bs_price(S, K, r, q, sigma, T, 'call')
+
+for (i in seq_along(n_steps)) {
+  n <- n_steps[i]
+  binomial_prices[i] <- binomial_price(S, K, r, q, sigma, T, n, 'call')
+}
+
+plot(n_steps, binomial_prices, type = 'l', col = '#001c3d', lwd = 2, main = 'Convergence of binomial price', xlab = 'Number of steps (n)', ylab = 'Option price')
+abline(h = blackscholes_price, col = '#e84e10', lwd = 1.5)
+legend('topright', legend = c('Binomial price', 'Black-Scholes price'), col = c('#001c3d', '#e84e10'), lty = c(1, 1), lwd = c(3, 3))
+```
+
