@@ -11,7 +11,7 @@ A simple R package I made for fun for pricing European options using:
 Refer to the vignette for usage demonstration and an example:
 
 - Click
-  [here](https://github.com/Tom9602/optionsLibrary/option_pricing_tutorial.html)
+  [here](https://tom9602.github.io/optionsLibrary/articles/option_pricing_tutorial.html)
   for the online vignette
 
 - Or in R, run the command: `browseVignettes('optionsLibrary')`
