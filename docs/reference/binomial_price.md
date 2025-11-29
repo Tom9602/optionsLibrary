@@ -46,7 +46,7 @@ binomial_price(
 
 - n:
 
-  number of steps
+  Number of steps
 
 - type:
 

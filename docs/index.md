@@ -6,12 +6,14 @@ A simple R package I made for fun for pricing European options using:
 
 - Cox-Ross-Rubinstein binomial tree
 
+- Monte Carlo simulation
+
 - Option Greeks
 
 Refer to the vignette for usage demonstration and an example:
 
 - Click
-  [here](https://tom9602.github.io/optionsLibrary/articles/option_pricing_tutorial.html)
+  [HERE!](https://tom9602.github.io/optionsLibrary/articles/option_pricing_tutorial.html)
   for the online vignette
 
 - Or in R, run the command: `browseVignettes('optionsLibrary')`

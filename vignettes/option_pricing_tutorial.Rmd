@@ -13,7 +13,7 @@ vignette: >
 
 # Introduction
 
-This vignette explains how to use the `optionsLibrary` package to price European options and compute Greeks, including a simple application.\
+This vignette explains how to use the `optionsLibrary` package to price European options using Black-Scholes, binomial pricing, and Monte Carlo simulation and includes a simple application.\
 
 The main syntax is defined as follows:
 
@@ -98,10 +98,20 @@ call_binomial
 put_binomial <- binomial_price(S, K, r, q, sigma, T, n, 'put')
 put_binomial
 ```
+
 \
 
-# Binomial convergence to Black-Scholes
-A nice application Using `optionsLibrary` is to plot the convergence of the binomial price to the Black-Scholes price:
+# Monte Carlo option pricing
+The option's price can also be simulated using Monte Carlo:
+```{r}
+call_montecarlo <- mc_price(S, K, r, q, sigma, T, 1000, type = 'call', antithetic = TRUE, control_variate = TRUE)
+call_montecarlo
+```
+
+\
+
+# Applied: convergence to Black-Scholes
+A nice application using `optionsLibrary` is to plot the convergence of the binomial price to the Black-Scholes price:
 ```{r}
 n_steps <- seq(5, 500, by = 5)
 binomial_prices <- numeric(length(n_steps))
@@ -117,5 +127,25 @@ for (i in seq_along(n_steps)) {
 plot(n_steps, binomial_prices, type = 'l', col = '#001c3d', lwd = 2, main = 'Convergence of binomial price', xlab = 'Number of steps (n)', ylab = 'Option price')
 abline(h = blackscholes_price, col = '#e84e10', lwd = 1.5)
 legend('topright', legend = c('Binomial price', 'Black-Scholes price'), col = c('#001c3d', '#e84e10'), lty = c(1, 1), lwd = c(3, 3))
+```
+
+\
+
+Similarly, the convergence of Monte Carlo estimates can also be plotted:
+```{r}
+n_steps2 <- seq(100, 5000, by = 25)
+mc_estimates <- numeric(length(n_steps2))
+set.seed(12345)
+
+for (i in seq_along(n_steps2)) {
+  mc <- mc_price(S, K, r, q, sigma, T, n = n_steps2[i], antithetic = TRUE, control_variate = TRUE)
+  mc_estimates[i] <- mc$price
+}
+```
+
+```{r}
+plot(n_steps2, mc_estimates, type = 'l', col = '#001c3d', lwd = 2, main = 'Convergence of Monte Carlo estimates', xlab = 'Number of simulations (n)', ylab = 'Estimated option price')
+abline(h = blackscholes_price, col = '#e84e10', lwd = 1.5)
+legend('topright', legend = c('Monte Carlo estimation', 'Black-Scholes price'), col = c('#001c3d', '#e84e10'), lty = c(1, 1), lwd = c(3, 3))
 ```
 

@@ -8,3 +8,5 @@
   : Black-Scholes option Greeks
 - [`bs_price()`](https://github.com/Tom9602/optionsLibrary/reference/bs_price.md)
   : Black-Scholes European option price
+- [`mc_price()`](https://github.com/Tom9602/optionsLibrary/reference/mc_price.md)
+  : Monte Carlo simulated European option price

@@ -3,5 +3,8 @@
 export(binomial_price)
 export(bs_greeks)
 export(bs_price)
+export(mc_price)
 importFrom(stats,dnorm)
 importFrom(stats,pnorm)
+importFrom(stats,rnorm)
+importFrom(stats,sd)

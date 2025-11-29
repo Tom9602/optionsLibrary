@@ -5,7 +5,8 @@
 ## Introduction
 
 This vignette explains how to use the `optionsLibrary` package to price
-European options and compute Greeks, including a simple application.  
+European options using Black-Scholes, binomial pricing, and Monte Carlo
+simulation and includes a simple application.  
 
 The main syntax is defined as follows:
 
@@ -141,9 +142,29 @@ put_binomial
 
   
 
-## Binomial convergence to Black-Scholes
+## Monte Carlo option pricing
 
-A nice application Using `optionsLibrary` is to plot the convergence of
+The option’s price can also be simulated using Monte Carlo:
+
+``` r
+call_montecarlo <- mc_price(S, K, r, q, sigma, T, 1000, type = 'call', antithetic = TRUE, control_variate = TRUE)
+call_montecarlo
+```
+
+    ## $price
+    ## [1] 6.587456
+    ## 
+    ## $se
+    ## [1] 0.1344295
+    ## 
+    ## $method
+    ## [1] "MC antithetic + control"
+
+  
+
+## Applied: convergence to Black-Scholes
+
+A nice application using `optionsLibrary` is to plot the convergence of
 the binomial price to the Black-Scholes price:
 
 ``` r
@@ -163,4 +184,27 @@ abline(h = blackscholes_price, col = '#e84e10', lwd = 1.5)
 legend('topright', legend = c('Binomial price', 'Black-Scholes price'), col = c('#001c3d', '#e84e10'), lty = c(1, 1), lwd = c(3, 3))
 ```
 
-![](option_pricing_tutorial_files/figure-html/unnamed-chunk-12-1.png)
+![](option_pricing_tutorial_files/figure-html/unnamed-chunk-13-1.png)
+
+  
+
+Similarly, the convergence of Monte Carlo estimates can also be plotted:
+
+``` r
+n_steps2 <- seq(100, 5000, by = 25)
+mc_estimates <- numeric(length(n_steps2))
+set.seed(12345)
+
+for (i in seq_along(n_steps2)) {
+  mc <- mc_price(S, K, r, q, sigma, T, n = n_steps2[i], antithetic = TRUE, control_variate = TRUE)
+  mc_estimates[i] <- mc$price
+}
+```
+
+``` r
+plot(n_steps2, mc_estimates, type = 'l', col = '#001c3d', lwd = 2, main = 'Convergence of Monte Carlo estimates', xlab = 'Number of simulations (n)', ylab = 'Estimated option price')
+abline(h = blackscholes_price, col = '#e84e10', lwd = 1.5)
+legend('topright', legend = c('Monte Carlo estimation', 'Black-Scholes price'), col = c('#001c3d', '#e84e10'), lty = c(1, 1), lwd = c(3, 3))
+```
+
+![](option_pricing_tutorial_files/figure-html/unnamed-chunk-15-1.png)

@@ -6,7 +6,7 @@
 #' @param q Dividend yield (annual, decimal, zero by default)
 #' @param sigma Volatility (annual, decimal)
 #' @param T Time to maturity (years)
-#' @param n number of steps
+#' @param n Number of steps
 #' @param type 'call' or 'put'
 #' @param american allowing for early exercise
 #' @description
