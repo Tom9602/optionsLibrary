@@ -101,7 +101,7 @@ put_binomial
 \
 
 # Binomial convergence to Black-Scholes
-An easy application Using `optionsLibrary` is to plot the convergence of the binomial price to the Black-Scholes price:
+A nice application Using `optionsLibrary` is to plot the convergence of the binomial price to the Black-Scholes price:
 ```{r}
 n_steps <- seq(5, 500, by = 5)
 binomial_prices <- numeric(length(n_steps))

@@ -13,7 +13,7 @@ Refer to the vignette for usage demonstration and an example:
 
 - Click [here](https://github.com/Tom9602/optionsLibrary/option_pricing_tutorial.html) for the online vignette
 
-- Or in R, run: `browseVignettes('optionsLibrary')`
+- Or in R, run the command: `browseVignettes('optionsLibrary')`
 
 
 
