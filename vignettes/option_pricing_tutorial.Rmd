@@ -1,7 +1,7 @@
 ---
-title: "Option Pricing with `optionsLibrary`"
+title: "How to use optionsLibrary"
 author: "Tom Smit"
-date: "`r Sys.Date()`"
+date: "2025-11-28"
 output: html_document
 vignette: >
   %\VignetteIndexEntry{Option Pricing Tutorial}
@@ -111,7 +111,9 @@ for (i in seq_along(n_steps)) {
   n <- n_steps[i]
   binomial_prices[i] <- binomial_price(S, K, r, q, sigma, T, n, 'call')
 }
+```
 
+```{r, fig.cap='Binomial convergence', fig.alt='Line plot showing binomial price converging to Black-Scholes price'}
 plot(n_steps, binomial_prices, type = 'l', col = '#001c3d', lwd = 2, main = 'Convergence of binomial price', xlab = 'Number of steps (n)', ylab = 'Option price')
 abline(h = blackscholes_price, col = '#e84e10', lwd = 1.5)
 legend('topright', legend = c('Binomial price', 'Black-Scholes price'), col = c('#001c3d', '#e84e10'), lty = c(1, 1), lwd = c(3, 3))
